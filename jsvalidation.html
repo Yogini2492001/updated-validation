@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Validation</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
+        integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+
+    <div class="Container">
+        <div class="header">
+            <h2>REGISTRATION FORM</h2>
+        </div>
+        <form class="form" id="form">
+            <div class="form-control">
+                <label>Username</label>
+                <input type="text" name="" id="Username" placeholder="Enter your full name" autocomplete="off">
+                <i class="fa-solid fa-circle-check"></i>
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <small>Error msg</small>
+            </div>
+            <div class="form-control">
+                <label>Email</label>
+                <input type="text" name="" id="Email" placeholder="Enter your Valid email id" autocomplete="off">
+                <i class="fa-solid fa-circle-check"></i>
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <small>Error msg</small>
+            </div>
+            <div class="form-control">
+                <label>Phone number</label>
+                <input type="number" name="" id="Phonenumber" placeholder="Enter your Phone numbere" autocomplete="off">
+                <i class="fa-solid fa-circle-check"></i>
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <small>Error msg</small>
+            </div>
+            <div class="form-control">
+                <label>Password</label>
+                <input type="text" name="" id="Password" placeholder="Enter your Password" autocomplete="off">
+                <i class="fa-solid fa-circle-check"></i>
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <small>Error msg</small>
+            </div>
+            <div class="form-control">
+                <label>Confirm Password</label>
+                <input type="text" name="" id="ConfirmPassword" placeholder="Enter your Password Again "
+                    autocomplete="off">
+                <i class="fa-solid fa-circle-check"></i>
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <small>Errormsg</small>
+            </div>
+            <input type="submit" value="Click here to submit" class="button">
+        </form>
+    </div>
+    <script type="text/javascript">
+        const form = document.getElementById('form');
+        const Username = document.getElementById('Username');
+        const Email = document.getElementById('Email');
+        const Phone = document.getElementById('Phonenumber');
+        const Password = document.getElementById('Password');
+        const ConfirmPassword = document.getElementById('ConfirmPassword');
+        //add event
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            validate();
+        })
+        //more email validate
+        const isEmail = (EmailVal) => {
+            var atSymbol = EmailVal.indexof("@");
+            if (atSymbol < 1) return false;
+            var dot = EmailVal.lastindexof('.');
+            if (dot <= atSymbol + 2) return false;
+            if (dot === EmailVal.length - 1) return false;
+            return true;
+        }
+        // define the validate function
+
+        const validate = () => {
+            const UsernameVal = Username.value.trim();
+            const EmailVal = Email.value.trim();
+            const PhoneVal = Phone.value.trim();
+            const PasswordVal = Password.value.trim();
+            const ConfirmPasswordVal = ConfirmPassword.value.trim();
+
+            //validate username
+            if (UsernameVal === "") {
+                setErrormsg(Username, 'username cannot be blank');
+            } else if (UsernameVal.length <= 3) {
+                setErrormsg(Username, 'Username min 4 char');
+            } else {
+                setSuccessMsg(Username);
+            }
+
+            
+
+
+             //validate email
+            if (EmailVal === "") {
+                setErrormsg(Email, 'Email cannot be blank');
+            } else if (!isEmail(EmailVal)) {
+                setErrormsg(EmailVal, 'Not a valid Email');
+            } else {
+                setSuccessMsg(Email);
+            }
+            //validate phone number
+            if (PhoneVal === "") {
+                setErrormsg(Phone, 'number cannot be blank');
+            } else if (PhoneVal.length <= 10) {
+                setErrormsg(Phone, 'Not a valid Mobile number');
+            } else {
+                setSuccessMsg(Phone);
+
+
+            }
+            function setErrormsg(input, Errormsgs) {
+                const formControl = input.parentElement;
+                const small = formControl.querySelector('small');
+                formControl.className = "form-control error"
+                small.innerText = Errormsgs;
+            }
+            function setSuccessMsg(input) {
+                const formControl = input.parentElement;
+                formControl.className = "form-control success";
+
+            }
+        }
+
+
+
+    </script>
+
+
+</body>
+
+</html>
